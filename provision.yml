@@ -1,0 +1,31 @@
+---
+- hosts: defaulthosts
+  user: root
+  #
+  # Note that this playbook expects 'username' and 'password_hash' to be defined as variables
+  # defining the non-root user to create
+  #
+  tasks:
+  - fail: msg="username or password_hash are unset"
+    when: username is undefined or password_hash is undefined
+
+  - name: install python-pip for our own use
+    apt: pkg=python-pip state=present
+
+  - name: install python-apt for our own use
+    apt: pkg=python-apt state=present
+
+  - name: setup non-root user 
+    user: name={{ username }} password={{password_hash}} shell=/bin/bash groups=sudo,users append=yes state=present
+  
+  - name: give 'sudo' users non password access to sudo
+    lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%sudo'
+        line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+        validate: visudo -cf %s
+
+  - name: install fail2ban
+    apt: pkg=fail2ban state=present
+    when: ansible_distribution=='Debian' or ansible_distribution=='Ubuntu'
