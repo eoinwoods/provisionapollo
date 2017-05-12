@@ -15,6 +15,14 @@
   - name: install python-apt for our own use
     apt: pkg=python-apt state=present
 
+  - name: add APT repository for Fish shell
+    apt_repository: repo=ppa:fish-shell/release-2 state=present update_cache=yes
+    when: install_fish_shell is defined
+
+  - name: install Fish shell
+    apt: pkg=fish state=present
+    when: install_fish_shell is defined
+
   - name: setup non-root user 
     user: name={{ username }} password={{password_hash}} shell=/bin/bash groups=sudo,users append=yes state=present
   
