@@ -11,12 +11,17 @@ To use these scripts then ...
    * username: the non-root user to provision
    * password_hash: an SHA512 hash for a password for the user
    * accountkey: a SETI@Home account key (if SETI@Home is to be installed)
+1. Optionally add a "install_docker" variable to the variables list, to install Docker
 1. Run Ansible:
    * ansible-playbook provision.yml -i inventoryfile
    * ansible-playbook install-setiathome.yml -i inventoryfile
+   * ansible-playbook install-geth.yml -i inventoryfile
 
 This should create a non-root user in the "sudo" (and "users") group, allow the "sudo" group to "sudo" without a password on the new VM, install the Python packages "python-pip" and "python-apt" and install "fail2ban" with its default configuration.
 
-If "install-setiathome" is also used, then the Boinc client is installed with a configuration file connecting it to SETI@Home with the specified user account key.
+If "install_docker" was defined as a variable then you get Docker and Docker Compose installed too.  The Docker Compose installation needs work as it is very fragile (using curl to retrieve it!).  The Docker
+installation should probably be factored out into its own playbook in any case.
+
+If "install-setiathome" is also used, then the Boinc client is installed with a configuration file connecting it to SETI@Home with the specified user account key.  Similarly if the "install-geth" playbook is used then the latest Ethereum "Geth" client will be installed (along with some pre-requisites such as Python virtualenv).
 
 Eoin Woods
