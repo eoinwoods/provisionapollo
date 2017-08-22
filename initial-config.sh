@@ -6,7 +6,7 @@
 # then using the password-less connection to install Python
 #
 
-USAGE="$0 hostname sshkeyfile"
+USAGE="$0 hostname sshkeyfile [user] [idfile]"
 
 if [ $# -lt 2 ]
 then
@@ -15,8 +15,23 @@ then
 fi
 host=$1
 keyfile=$2
+user=root
+idfile=""
+if [ $# -gt 2 ]
+then
+   user=$3
+fi
+if [ $# -gt 3 ]
+then
+   idfile=$4
+fi
 
-cat $keyfile | ssh root@$host "cat >> ~/.ssh/authorized_keys"
+if [ ! -z "$idfile" ]
+then
+   idfile_param="-i $idfile"
+fi
 
-ssh root@$host apt-get install python
+cat $keyfile | ssh $idfile_param $user@$host "cat >> ~/.ssh/authorized_keys"
+
+ssh $idfile_param $user@$host sudo apt-get --assume-yes install python
 
