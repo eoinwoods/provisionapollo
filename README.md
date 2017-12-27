@@ -10,12 +10,9 @@ To use these scripts then ...
 1. Add a [defaulthosts:vars] section to "inventory" to define:
    * username: the non-root user to provision
    * password_hash: an SHA512 hash for a password for the user
-   * accountkey: a SETI@Home account key (if SETI@Home is to be installed)
 1. Optionally add a "install_docker" variable to the variables list, to install Docker
 1. Run Ansible:
    * ansible-playbook provision.yml -i inventoryfile
-   * ansible-playbook install-setiathome.yml -i inventoryfile
-   * ansible-playbook install-geth.yml -i inventoryfile
 
 This should create a non-root user in the "sudo" (and "users") group, allow the "sudo" group to "sudo" without a password on the new VM, install the Python packages "python-pip" and "python-apt" and install "fail2ban" with its default configuration.
 
