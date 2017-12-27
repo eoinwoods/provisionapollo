@@ -2,13 +2,14 @@
 # myhost.domain.com
 
 [defaulthosts:vars]
-# The SETI@Home account key
-account_key=1234567
 # The non-root user to create
 username=user1
 # The hash of the password for the user (from generate-password.py)
 password_hash=12345678901234567890
 # Set this variable to any value to install the "Fish" shell
 #install_fish_shell=1
+# Set this variable to any value to install Docker
+#install_docker=1
+
 
 
