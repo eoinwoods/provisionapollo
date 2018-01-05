@@ -79,7 +79,7 @@ services:
     container_name: telegraf
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ~/etc/apollo_telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /tmp/apollo_telegraf.conf:/etc/telegraf/telegraf.conf:ro
     depends_on:
       - influxdb
     network_mode: "service:influxdb"
