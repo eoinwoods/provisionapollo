@@ -84,4 +84,19 @@ services:
       - influxdb
     network_mode: "service:influxdb"
 
+  cpuhog:
+    image: eoinwoods/cpuhog-service
+    container_name: cpuhog
+    depends_on:
+      - telegraf
+      - zipkin
+
+  gateway:
+    image: eoinwoods/gateway-service
+    container_name: gateway
+    depends_on:
+      - telegraf
+      - zipkin
+      - cpuhog
+
     

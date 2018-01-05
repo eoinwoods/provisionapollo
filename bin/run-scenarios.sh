@@ -4,6 +4,12 @@
 #                    databases, to capture traces and resource utilisation data sets.
 #
 ROOTDIR=${ROOTDIR:-$PWD}
+
+
+echo "Refreshing Energy Services containers"
+sudo docker pull eoinwoods/gateway-service
+sudo docker pull eoinwoods/cpuhog-service
+
 echo "========== Running docker-compose to start services"
 cp $ROOTDIR/etc/apollo_telegraf.conf /tmp
 sudo docker-compose -f $ROOTDIR/etc/apollo-env.yml up -d
@@ -30,17 +36,12 @@ drop measurement docker_container_mem ;
 drop measurement docker_container_net ;
 EOF
 
-echo "Refreshing Energy Services containers"
-sudo docker pull eoinwoods/gateway-service
-sudo docker pull eoinwoods/cpuhog-service
-
 echo "========== Starting Energy Services"
 sudo docker run -d --name gateway -p 9999:9999 eoinwoods/gateway-service
 sudo docker run -d --name cpuhog --net=container:gateway eoinwoods/cpuhog-service
 
 echo "========== Waiting 30 seconds"
 sleep 30
-
 
 echo "========== Running scenarios"
 curl http://localhost:9999/invoke/single-cpu
