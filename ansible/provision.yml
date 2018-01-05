@@ -3,9 +3,7 @@
   user: root
   #
   # Note that this playbook expects 'username' and 'password_hash' to be 
-  # defined as variables defining the non-root user to create.  You can 
-  # also define "install_docker" if Docker is to be installed and define
-  # "install_fish_shell" if Fish is to be installed.  
+  # defined as variables defining the non-root user to create.
   #
   tasks:
   - fail: msg="username or password_hash are unset"
@@ -19,40 +17,23 @@
 
   - name: apt key for Docker
     command: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 7EA0A9C3F273FCD8
-    when: install_docker is defined
 
   - name: apt repo for Docker
     apt_repository: repo="deb [arch=amd64] https://download.docker.com/linux/ubuntu zesty edge" state=present
-    when: install_docker is defined
 
   - name: install Docker
     apt: pkg=docker-ce update_cache=yes state=present
-    when: install_docker is defined
 
   # this is very fragile and needs better indirection and parameterisation
   - name: install Docker Compose
     shell: curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose
-    when: install_docker is defined
 
   - name: make Docker Compose executable
     shell: chmod +x /usr/local/bin/docker-compose
-    when: install_docker is defined
-
-  - name: add APT repository for Fish shell
-    apt_repository: repo=ppa:fish-shell/release-2 state=present update_cache=yes
-    when: install_fish_shell is defined
-
-  - name: install Fish shell
-    apt: pkg=fish state=present
-    when: install_fish_shell is defined
 
   - name: setup non-root user 
     user: name={{ username }} password={{password_hash}} shell=/bin/bash groups=sudo,users append=yes state=present
 
-  - name: give non-root user Fish as shell if an option
-    user: name={{username}} shell="/usr/bin/fish"
-    when: install_fish_shell is defined    
-  
   - name: give 'sudo' users non password access to sudo
     lineinfile:
         dest: /etc/sudoers
@@ -64,3 +45,4 @@
   - name: install fail2ban
     apt: pkg=fail2ban state=present
     when: ansible_distribution=='Debian' or ansible_distribution=='Ubuntu'
+
