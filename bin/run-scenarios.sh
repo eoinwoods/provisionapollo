@@ -29,6 +29,10 @@ EOF
 echo "========== Waiting 30 seconds"
 sleep 30
 
+echo "Refreshing Energy Services containers"
+sudo docker pull eoinwoods/gateway-service
+sudo docker pull eoinwoods/cpuhog-service
+
 echo "========== Starting Energy Services"
 sudo docker run -d --name gateway -p 9999:9999 eoinwoods/gateway-service
 sudo docker run -d --name cpuhog --net=container:gateway eoinwoods/cpuhog-service
