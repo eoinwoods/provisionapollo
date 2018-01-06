@@ -14,6 +14,15 @@ To use these scripts then ...
    * ansible-playbook provision.yml -i inventoryfile
 1. Use bin/run-scenarios.sh to run a set of Apollo scenarios and unload Zipkin and InfluxDB data
 
-This should create a non-root user in the "sudo" (and "users") group, allow the "sudo" group to "sudo" without a password on the new VM, install the Python packages "python-pip" and "python-apt", install Docker (and docker-compose) and install "fail2ban" with its default configuration.
+The initial-setup.sh step should create a non-root user in the "sudo" (and "users") group, allow the "sudo" group to "sudo" without a password on the new VM, install the Python packages "python-pip" and "python-apt", install Docker (and docker-compose) and install "fail2ban" with its default configuration.
+
+The key scripts for running the scenarios are:
+
+* bin/start-services.sh - pull the latest services containers and start the environment via "docker-compose up"
+* bin/stop-services.sh - shut down the environment via "docker-compose down"
+* bin/run-scenarios.sh - clear the databases, run some scenarios, export the databases
+
+There are then some subscripts and useful utility scripts in the "bin" directory too.
+
 
 Eoin Woods
