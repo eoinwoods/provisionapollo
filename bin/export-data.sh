@@ -10,6 +10,10 @@ echo "========== Exporting InfluxDB data"
 sudo docker exec influxdb influx_inspect export -database telegraf -datadir /var/lib/influxdb/data -waldir /var/lib/influxdb/wal -out /tmp/telegraf.line.dmp
 sudo docker cp influxdb:/tmp/telegraf.line.dmp .
 
+echo "========== Capturing Docker network information"
+sudo docker network inspect $(sudo docker network ls | awk '{print $2}' | sed 1d) > docker_network.json
+
+
 
 
 
