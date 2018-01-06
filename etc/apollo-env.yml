@@ -98,5 +98,7 @@ services:
       - telegraf
       - zipkin
       - cpuhog
+    ports:
+      - 9999:9999
 
     
