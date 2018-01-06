@@ -36,6 +36,10 @@ drop measurement docker_container_mem ;
 drop measurement docker_container_net ;
 EOF
 
+echo "========== Removing old Energy Services containers"
+sudo docker rm gateway 
+sudo docker rm cpuhog
+
 echo "========== Starting Energy Services"
 sudo docker run -d --name gateway -p 9999:9999 eoinwoods/gateway-service
 sudo docker run -d --name cpuhog --net=container:gateway eoinwoods/cpuhog-service
