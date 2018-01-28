@@ -91,6 +91,19 @@ services:
       - telegraf
       - zipkin
 
+  datahogdb:
+    image: mongo
+    container_name: datahogdb
+    ports:
+      - 27017:27017
+ 
+  datahog:
+    image: eoinwoods/datahog-service
+    container_name: datahog
+    depends_on:
+      - datahogdb
+    network_mode: "service:datahogdb"
+
   gateway:
     image: eoinwoods/gateway-service
     container_name: gateway
@@ -98,6 +111,7 @@ services:
       - telegraf
       - zipkin
       - cpuhog
+      - datahog
     ports:
       - 9999:9999
 
