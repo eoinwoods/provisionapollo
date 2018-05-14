@@ -8,7 +8,8 @@ ROOTDIR=${ROOTDIR:-$PWD}
 echo "Refreshing Energy Services containers"
 sudo docker pull eoinwoods/gateway-service
 sudo docker pull eoinwoods/cpuhog-service
-sudo docker pull eoinwoods/datahog-service
+#sudo docker pull eoinwoods/datahog-service
+sudo docker pull eoinwoods/fiohog-service
 
 echo "========== Running docker-compose to start services"
 # This env var is used for the Docker network name created by Compose
