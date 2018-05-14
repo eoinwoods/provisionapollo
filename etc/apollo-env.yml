@@ -90,14 +90,15 @@ services:
     depends_on:
       - telegraf
       - zipkin
+    ports:
+      - 9001:9001
 
   fiohog:
     image: eoinwoods/fiohog-service
     container_name: fiohog
-    depends_on:
-      - telegraf
-      - zipkin
-
+    ports:
+      - 9003:9003
+ 
 # Removed Datahog service and its database as it is not needed
 # for the current configuration
 #  datahogdb:
@@ -105,6 +106,8 @@ services:
 #    container_name: datahogdb
 #    ports:
 #      - 27017:27017
+#      # expose port for datahog as it's sharing nw stack
+#      - 9002:9002
  
 #  datahog:
 #    image: eoinwoods/datahog-service
