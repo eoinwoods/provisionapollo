@@ -1,8 +1,8 @@
 #
 # run-scenarios.sh - clear the databases,
 #                    run some workload scenarios and 
-#                    export the data from the MySQL and InfluxDB databases, to capture traces 
-#                    and resource utilisation data sets.
+#                    export the data from the MySQL and InfluxDB databases, 
+#                    to capture traces and resource utilisation data sets.
 #
 ROOTDIR=${ROOTDIR:-$PWD}
 PATH=$PATH:$ROOTDIR/bin
@@ -18,6 +18,10 @@ sleep 10
 curl http://localhost:9999/invoke/three-cpu
 sleep 10
 curl http://localhost:9999/invoke/single-cpu
+sleep 10
+curl http://localhost:9999/invoke/data-500mb-4times
+sleep 10
+curl http://localhost:9999/invoke/cpu-data-mix
 
 echo "========== Waiting 30 seconds"
 sleep 30
