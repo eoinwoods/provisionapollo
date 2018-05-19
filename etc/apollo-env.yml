@@ -97,7 +97,7 @@ services:
     image: eoinwoods/fiohog-service
     container_name: fiohog
     ports:
-      - 9003:9003
+      - 9004:9004
  
 # Removed Datahog service and its database as it is not needed
 # for the current configuration
