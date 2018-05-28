@@ -77,9 +77,16 @@ services:
   telegraf:
     image: telegraf
     container_name: telegraf
+    environment:
+      HOST_PROC: /rootfs/proc
+      HOST_SYS: /rootfs/sys
+      HOST_ETC: /rootfs/etc
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp/apollo_telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /sys:/rootfs/sys:ro
+      - /proc:/rootfs/proc:ro
+      - /etc:/rootfs/etc:ro
     depends_on:
       - influxdb
     network_mode: "service:influxdb"

@@ -15,6 +15,14 @@ EOF
 
 echo "========== Dropping Influxdb measurements from telegraf database"
 sudo docker run -i --net=container:influxdb influxdb influx -database telegraf <<EOF
+drop measurement cpu ;
+drop measurement disk ;
+drop measurement diskio ; 
+drop measurement kernel ;
+drop measurement mem ;
+drop measurement processes ;
+drop measurement swap ;
+drop measurement system ;
 drop measurement docker ;
 drop measurement docker_container_blkio ;
 drop measurement docker_container_cpu ;
