@@ -6,10 +6,11 @@
 #
 ROOTDIR=${ROOTDIR:-$PWD}
 PATH=$PATH:$ROOTDIR/bin
+DEMO_SCENARIOS="single-cpu three-cpu single-cpu data-500mb-4times cpu-data-mix"
 
 if [ $# -eq 0 ]
 then
-  scenario_list="single-cpu three-cpu single-cpu data-500mb-4times cpu-data-mix"
+  scenario_list=$DEMO_SCENARIOS
 else
   scenario_list=$*
 fi
