@@ -9,12 +9,14 @@ PATH=$PATH:$ROOTDIR/bin
 
 if [ $# -eq 0 ]
 then
-  scenario_list="single_cpu three_cpu single_cpu data-500mb-4times cpu-data-mix"
+  scenario_list="single-cpu three-cpu single-cpu data-500mb-4times cpu-data-mix"
 else
   scenario_list=$*
 fi
 
 clear-databases.sh
+
+pidstat -C java -d -u -h -I 1 > pidstat.out 2>&1 &
 
 echo "========== Waiting 30 seconds to collect initial data"
 sleep 30
@@ -30,6 +32,8 @@ done
 
 echo "========== Waiting another 25 seconds to collect data"
 sleep 20
+
+killall -HUP pidstat
 
 export-data.sh
 
