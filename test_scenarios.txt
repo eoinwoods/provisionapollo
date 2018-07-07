@@ -1,0 +1,8 @@
+single-cpu-x50
+single-cpu-x50-pause
+three-cpu-x50
+data-100mbx4-x50
+data-500mbx4-x50
+data-1gbx4-x50
+cpu-data-mix-x50
+
