@@ -16,10 +16,10 @@ file_name="${dataset_name}.tar"
 
 zipkin_file=zipkin_db.sql
 telegraf_file=telegraf.line.dmp
-file_list="$zipkin_file telegraf_file \
+file_list="$zipkin_file $telegraf_file \
            docker_network.json pidstat.out sar_stats.out"
 
-echo "========== Adding dataset name meta data to data set"
+echo "========== Adding dataset name metadata to data set"
 influxrow="apollo_check,data_set=$dataset_name,application=apollo value=1 1527811200000000000"
 zipkinrow="insert into zipkin.zipkin_spans values(0, 0, 1, '$dataset_name', 0, null, 1527811200000, 0);"
 echo ${influxrow} >> ${telegraf_file}
