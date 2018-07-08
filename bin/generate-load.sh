@@ -16,6 +16,7 @@ then
       exit 1
    fi
 fi
+echo "Generating load with $parallel_degree threads - ^C to interrupt"
 while true
 do
    openssl speed -multi $parallel_degree > /dev/null 2>&1
