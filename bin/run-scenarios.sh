@@ -22,6 +22,7 @@ do
    $SCRIPTDIR/clear-databases.sh
 
    pidstat -C java -d -u -h -I 1 > pidstat.out 2>&1 &
+   mpstat -P ON 1 > mpstat.out 2>&1 &
 
    echo "========== Waiting 20 seconds to collect initial data"
    sleep 20
@@ -36,6 +37,8 @@ do
 
    # Stop writing process level statistics
    killall -HUP pidstat
+   # Stop writing machine level CPU statistics
+   killall -HUP mpstat
 
    # Collect sar(1m) stats for CPU, I/O and memory from 10 mins ago to now
    # The explicit LC_TIME setting is to set 24 hour times
